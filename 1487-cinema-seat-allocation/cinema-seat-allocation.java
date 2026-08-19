@@ -3,65 +3,71 @@ import java.util.*;
 class Solution {
     public int maxNumberOfFamilies(int n, int[][] reservedSeats) {
 
-        HashSet<String> reserved = new HashSet<>();
-        HashSet<Integer> rows = new HashSet<>();
+        // Sort by row
+        Arrays.sort(reservedSeats, (a, b) -> a[0] - b[0]);
 
-        // Store reserved seats
-        for (int[] seat : reservedSeats) {
-            reserved.add(seat[0] + "," + seat[1]);
-            rows.add(seat[0]);
-        }
+        // Initially, every row can have 2 families
+        int answer = n * 2;
 
-        // All rows without reserved seats can take 2 families
-        int count = (n - rows.size()) * 2;
+        int i = 0;
 
-        // Check only rows which have reserved seats
-        for (int row : rows) {
+        while (i < reservedSeats.length) {
+
+            int row = reservedSeats[i][0];
+
+            // seats[seat] = true means reserved
+            boolean[] seats = new boolean[11];
+
+            // Store all reserved seats of this row
+            while (i < reservedSeats.length &&
+                   reservedSeats[i][0] == row) {
+
+                seats[reservedSeats[i][1]] = true;
+                i++;
+            }
 
             boolean left = true;
             boolean right = true;
+            boolean middle = true;
 
-            // Check seats 2,3,4,5
+            // 2,3,4,5
             for (int seat = 2; seat <= 5; seat++) {
-                if (reserved.contains(row + "," + seat)) {
+                if (seats[seat]) {
                     left = false;
                     break;
                 }
             }
 
-            // Check seats 6,7,8,9
+            // 6,7,8,9
             for (int seat = 6; seat <= 9; seat++) {
-                if (reserved.contains(row + "," + seat)) {
+                if (seats[seat]) {
                     right = false;
                     break;
                 }
             }
 
-            if (left && right) {
-                count += 2;
+            // 4,5,6,7
+            for (int seat = 4; seat <= 7; seat++) {
+                if (seats[seat]) {
+                    middle = false;
+                    break;
+                }
             }
-            else if (left || right) {
-                count += 1;
+
+            // Decide families for this row
+            if (left && right) {
+                // 2 families
+            }
+            else if (left || right || middle) {
+                // 1 family instead of 2
+                answer--;
             }
             else {
-                // Both left and right are blocked.
-                // Check middle: 4,5,6,7
-
-                boolean middle = true;
-
-                for (int seat = 4; seat <= 7; seat++) {
-                    if (reserved.contains(row + "," + seat)) {
-                        middle = false;
-                        break;
-                    }
-                }
-
-                if (middle) {
-                    count += 1;
-                }
+                // 0 families instead of 2
+                answer -= 2;
             }
         }
 
-        return count;
+        return answer;
     }
 }
