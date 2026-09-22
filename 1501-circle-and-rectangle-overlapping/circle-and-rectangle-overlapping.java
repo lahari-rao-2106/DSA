@@ -1,3 +1,4 @@
+//Medium problem 
 class Solution {
     public boolean checkOverlap(int r, int x, int y,
                                 int x1, int y1, int x2, int y2) {
@@ -5,7 +6,7 @@ class Solution {
         int closestX = x;
         int closestY = y;
 
-        if (x < x1)
+       if (x < x1)
             closestX = x1;
         else if (x > x2)
             closestX = x2;
