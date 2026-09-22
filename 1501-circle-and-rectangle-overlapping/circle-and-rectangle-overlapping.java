@@ -1,12 +1,22 @@
 class Solution {
     public boolean checkOverlap(int r, int x, int y,
-                               int x1, int y1, int x2, int y2) {
+                                int x1, int y1, int x2, int y2) {
 
-        int cx = Math.max(x1, Math.min(x, x2));
-        int cy = Math.max(y1, Math.min(y, y2));
+        int closestX = x;
+        int closestY = y;
 
-        int dx = x - cx;
-        int dy = y - cy;
+        if (x < x1)
+            closestX = x1;
+        else if (x > x2)
+            closestX = x2;
+
+        if (y < y1)
+            closestY = y1;
+        else if (y > y2)
+            closestY = y2;
+
+        int dx = x - closestX;
+        int dy = y - closestY;
 
         return dx * dx + dy * dy <= r * r;
     }
