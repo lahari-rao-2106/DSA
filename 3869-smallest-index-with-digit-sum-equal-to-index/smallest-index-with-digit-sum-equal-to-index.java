@@ -1,4 +1,3 @@
-//potd 
 class Solution {
     public int smallestIndex(int[] nums) {
 
@@ -16,7 +15,6 @@ class Solution {
                 return i;
             }
         }
-
-        return -1;
+      return -1;
     }
 }
