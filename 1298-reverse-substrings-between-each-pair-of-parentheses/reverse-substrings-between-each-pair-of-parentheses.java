@@ -1,35 +1,24 @@
-class Solution {
-    public String reverseParentheses(String s) {
-
-        Stack<Character> stack = new Stack<>();
-
-        for (char c : s.toCharArray()) {
-
-            if (c != ')') {
+class Solution{
+    public String reverseParentheses(String s){
+        Stack<Character> stack=new Stack<>();
+        for(char c:s.toCharArray()){
+            if(c!=')'){
                 stack.push(c);
-            } 
-            else {
-
-                String temp = "";
-
-                while (stack.peek() != '(') {
-                    temp += stack.pop();
+            }else{
+                StringBuilder temp=new StringBuilder();
+                while(stack.peek()!='('){
+                    temp.append(stack.pop());
                 }
-
-                stack.pop(); // remove '('
-
-                for (char x : temp.toCharArray()) {
-                    stack.push(x);
+                stack.pop();
+                for(int i=0;i<temp.length();i++){
+                    stack.push(temp.charAt(i));
                 }
             }
         }
-
-        String answer = "";
-
-        while (!stack.isEmpty()) {
-            answer = stack.pop() + answer;
+        StringBuilder ans=new StringBuilder();
+        while(!stack.isEmpty()){
+            ans.append(stack.pop());
         }
-
-        return answer;
+        return ans.reverse().toString();
     }
 }
