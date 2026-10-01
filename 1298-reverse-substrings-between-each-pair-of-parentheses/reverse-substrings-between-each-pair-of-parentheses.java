@@ -11,10 +11,8 @@ class Solution{
                 }
                 stack.pop();
                 for(int i=0;i<temp.length();i++){
-                    stack.push(temp.charAt(i));
-                }
-            }
-        }
+                    stack.push(temp.charAt(i));}
+            }    }
         StringBuilder ans=new StringBuilder();
         while(!stack.isEmpty()){
             ans.append(stack.pop());
