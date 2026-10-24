@@ -1,40 +1,33 @@
 
 class Solution {
     public int countDaysTogether(String arriveAlice, String leaveAlice, String arriveBob, String leaveBob) {
-        int[] days = {31,28,31,30,31,30,31,31,30,31,30,31};
+        int a1 = getDay(arriveAlice);
+        int a2 = getDay(leaveAlice);
+        int b1 = getDay(arriveBob);
+        int b2 = getDay(leaveBob);
 
-        int[] date = new int[4];
-        String[] s = {arriveAlice, leaveAlice, arriveBob, leaveBob};
+        int start = Math.max(a1, b1);
+        int end = Math.min(a2, b2);
 
-        for (int i = 0; i < 4; i++) {
-            int month = Integer.parseInt(s[i].substring(0, 2));
-            int day = Integer.parseInt(s[i].substring(3, 5));
-
-            int total = day;
-
-            for (int j = 0; j < month - 1; j++) {
-                total += days[j];
-            }
-
-            date[i] = total;
+        if (start > end) {
+            return 0;
         }
 
-        int start = date[0];
-        if (date[2] > start) {
-            start = date[2];
+        return end - start + 1;
+    }
+
+    public int getDay(String date) {
+        int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        int month = Integer.parseInt(date.substring(0, 2));
+        int day = Integer.parseInt(date.substring(3, 5));
+
+        int total = day;
+
+        for (int i = 0; i < month - 1; i++) {
+            total += days[i];
         }
 
-        int end = date[1];
-        if (date[3] < end) {
-            end = date[3];
-        }
-
-        int count = 0;
-
-        for (int i = start; i <= end; i++) {
-            count++;
-        }
-
-        return count;
+        return total;
     }
 }
