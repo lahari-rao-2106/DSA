@@ -4,20 +4,12 @@ import java.util.*;
 class Solution {
     public List<Integer> targetIndices(int[] nums, int target) {
         List<Integer> result = new ArrayList<>();
-        int smaller = 0;
-        int equal = 0;
+        Arrays.sort(nums);
 
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] < target) {
-                smaller++;
-            }
             if (nums[i] == target) {
-                equal++;
+                result.add(i);
             }
-        }
-
-        for (int i = 0; i < equal; i++) {
-            result.add(smaller + i);
         }
 
         return result;
